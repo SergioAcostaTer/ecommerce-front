@@ -17,7 +17,7 @@ export default function Home() {
 
       <img src={"https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg"} className="w-full h-[300px]"></img>
 
-      <ProductList products={products} filters={false}/>
+      <ProductList products={products} filters={false} loading={false}/>
     </main>
   );
 }

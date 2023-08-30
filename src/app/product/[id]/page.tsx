@@ -12,9 +12,11 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState<boolean>(true);
   const [addToCart] = useCart((state) => [state.addToCart]);
 
+
   useEffect(() => {
     getProduct(id).then((e) => {
       setProduct(e);
+      console.log(e)
       setLoading(false);
     });
   }, [id]);
@@ -29,7 +31,7 @@ export default function ProductDetails() {
                 <img
                   alt="ecommerce"
                   className={`w-full object-contain object-center rounded w-full h-full bg-white`}
-                  src={product?.image}
+                  src={product?.images[0]}
                 ></img>
               ) : (
                 <div
@@ -52,7 +54,7 @@ export default function ProductDetails() {
                       <svg
                         key={index}
                         fill={
-                          product && index < product.rating.rate
+                          product && index < product.rating
                             ? "currentColor"
                             : "none"
                         }
@@ -61,7 +63,7 @@ export default function ProductDetails() {
                         strokeLinejoin="round"
                         strokeWidth="2"
                         className={`w-4 h-4 ${
-                          product && index < product.rating.rate
+                          product && index < product.rating
                             ? "text-red-500"
                             : "text-gray-400"
                         }`}
@@ -72,7 +74,7 @@ export default function ProductDetails() {
                     ))}
 
                   <span className="text-gray-600 ml-3">
-                    {product?.rating.count} Reviews
+                    {Math.ceil(Math.random() * 700)} Reviews
                   </span>
                 </span>
                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">

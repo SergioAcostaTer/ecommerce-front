@@ -2,18 +2,23 @@
 import { Product } from "@/types";
 import axios, { AxiosResponse } from "axios";
 
+
+interface ProductReponse{
+  products: Product[]
+}
+
 export const getProducts = async (
   category: string | string[]
 ): Promise<Product[]> => {
   if (category) {
-    const response: AxiosResponse<Product[]> = await axios.get(
-      `https://fakestoreapi.com/products/category/${category}`
+    const response: AxiosResponse<ProductReponse> = await axios.get(
+      `https://dummyjson.com/products/category/${category}`
     );
-    return response.data;
+    return response.data.products;
   } else {
-    const response: AxiosResponse<Product[]> = await axios.get(
-      "https://fakestoreapi.com/products"
+    const response: AxiosResponse<ProductReponse> = await axios.get(
+      "https://dummyjson.com/products?limit=100"
     );
-    return response.data;
+    return response.data.products;
   }
 };

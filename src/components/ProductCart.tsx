@@ -14,7 +14,7 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
 
   return (
     <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-      <img src={product.image} alt="product-image" className="w-full rounded-lg sm:w-40" />
+      <img src={product.thumbnail} alt="product-image" className="w-full rounded-lg sm:w-40" />
       <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold text-gray-900">{product.title}</h2>

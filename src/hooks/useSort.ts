@@ -14,14 +14,12 @@ export default function useSort(products: ProductType[]): [Dispatch<SetStateActi
   
       let sortedProducts = [...productsToShow];
   
-      if (sort === "popular") {
-        sortedProducts.sort((a, b) => b.rating.count - a.rating.count);
-      } else if (sort === "lowestPrice") {
+      if (sort === "lowestPrice") {
         sortedProducts.sort((a, b) => a.price - b.price);
       } else if (sort === "highestPrice") {
         sortedProducts.sort((a, b) => b.price - a.price);
       } else if (sort === "rating") {
-        sortedProducts.sort((a, b) => b.rating.rate - a.rating.rate);
+        sortedProducts.sort((a, b) => b.rating - a.rating);
       } else if (sort === "alphabetical") {
         sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
       }

@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import useCart from "@/hooks/useCart";
+import useCategories from "@/hooks/useCategories";
 import useLocation from "@/hooks/useLocation";
 import Link from "next/link";
 
 export default function Header() {
-    const [cart] = useCart(state => [state.cart])
-    const location = useLocation()
-
-
+  const [cart] = useCart((state) => [state.cart]);
+  const [categories] = useCategories();
+  const location = useLocation();
 
   return (
     <>
@@ -35,7 +35,6 @@ export default function Header() {
                   What a Market
                 </span>
               </div>
-              
             </Link>
             <div className="ml-6 flex flex-1 gap-x-3">
               <div className="flex cursor-pointer select-none items-center gap-x-2 rounded-md border bg-[#4094F7] py-2 px-4 text-white hover:bg-blue-500">
@@ -136,22 +135,21 @@ export default function Header() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-sm font-medium capitalize">{location?.country}</span>
+              <span className="text-sm font-medium capitalize">
+                {location?.country}
+              </span>
             </div>
 
             <div className="flex gap-x-8">
-              <Link className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100 capitalize" href={"/category/electronics"}>
-              electronics
-              </Link>
-              <Link className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100 capitalize" href={"/category/jewelery"}>
-              jewelery
-              </Link>
-              <Link className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100 capitalize" href={"/category/men's clothing"}>
-              men's clothing
-              </Link> 
-              <Link className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100 capitalize" href={"/category/women's clothing"}>
-              women's clothing
-              </Link>
+              {categories?.slice(0,7).map((e) => (
+                <Link
+                  className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100 capitalize"
+                  key={e}
+                  href={`/category/${e}`}
+                >
+                  {e}
+                </Link>
+              ))}
             </div>
 
             <span className="cursor-pointer rounded-sm py-1 px-2 text-sm font-medium hover:bg-gray-100">

@@ -7,13 +7,17 @@ import useSort from "@/hooks/useSort";
 export default function ProductList({
   products,
   filters = false,
-  loading = false
+  loading = false,
+  sorts = true
 }: {
   products: ProductType[];
   filters: boolean;
-  loading: boolean
+  loading: boolean;
+  sorts: boolean
 }) {
   const [setSort, sortedProducts, sort] = useSort(products);
+
+  console.log(products)
 
   return (
     <div className="flex">
@@ -23,9 +27,14 @@ export default function ProductList({
       {/* Product Grid */}
       <div className="flex-1 p-4 pl-2 pt-0">
         <div className="flex w-full">
-          {filters && (
+
+
+
+
+
+          {sorts && (
             <ul className="flex space-x-4 py-4">
-              <li
+              {/* <li
                 onClick={() =>
                   setSort((sort) => {
                     console.log(sort);
@@ -43,7 +52,7 @@ export default function ProductList({
                 }`}
               >
                 Popular
-              </li>
+              </li> */}
               <li
                 onClick={() =>
                   setSort((sort) => {

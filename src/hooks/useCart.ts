@@ -15,7 +15,9 @@ interface States {
 }
 
 const useCart = create<States>((set) => {
-  const initialCart = localStorage.getItem("cart");
+  const isClient = typeof window !== "undefined";
+
+  const initialCart = isClient ? localStorage.getItem("cart") : null;
   const initialCartArray = initialCart ? JSON.parse(initialCart) : [];
 
   return {
@@ -23,7 +25,7 @@ const useCart = create<States>((set) => {
 
     addToCart: (item) => {
       set((state) => {
-        console.log(item)
+        console.log(item);
         const existingItem = state.cart.find(
           (cartItem) => cartItem.id === item.id
         );
@@ -34,14 +36,18 @@ const useCart = create<States>((set) => {
               ? { ...itemMap, quantity: itemMap.quantity + 1 }
               : itemMap
           );
-          localStorage.setItem("cart", JSON.stringify(updatedCart));
+          if (isClient) {
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+          }
           return { cart: updatedCart };
         } else {
           const updatedCart = [
             ...state.cart,
             { ...item, quantity: 1, id: item.id },
           ];
-          localStorage.setItem("cart", JSON.stringify(updatedCart));
+          if (isClient) {
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+          }
           return { cart: updatedCart };
         }
       });
@@ -50,41 +56,47 @@ const useCart = create<States>((set) => {
     removeFromCart: (itemId) => {
       set((state) => {
         const updatedCart = state.cart.filter((item) => item.id !== itemId);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if (isClient) {
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         return { cart: updatedCart };
       });
     },
-
 
     addOne: (itemId) => {
       set((state) => {
         const updatedCart = state.cart.map((item) =>
           item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
         );
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if (isClient) {
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         return { cart: updatedCart };
       });
     },
 
-
     removeOne: (itemId) => {
-        set((state) => {
-          const updatedCart = state.cart.map((item) =>
-            item.id === itemId && item.quantity > 1
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          );
+      set((state) => {
+        const updatedCart = state.cart.map((item) =>
+          item.id === itemId && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+        if (isClient) {
           localStorage.setItem("cart", JSON.stringify(updatedCart));
-          return { cart: updatedCart };
-        });
-      },
+        }
+        return { cart: updatedCart };
+      });
+    },
 
     updateCartItemQuantity: (itemId, newQuantity) => {
       set((state) => {
         const updatedCart = state.cart.map((item) =>
           item.id === itemId ? { ...item, quantity: newQuantity } : item
         );
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if (isClient) {
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         return { cart: updatedCart };
       });
     },
